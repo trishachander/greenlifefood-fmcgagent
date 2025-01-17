@@ -1,0 +1,16 @@
+{
+    "colors": {
+        "primary": "#4c7346",
+        "secondary": "#86a886",
+        "background": "#f5f9f5",
+        "text": "#2c3e2c"
+    },
+    "fonts": {
+        "primary": "sans-serif"
+    },
+    "spacing": {
+        "chat_padding": "1rem",
+        "message_margin": "1rem",
+        "border_radius": "15px"
+    }
+}

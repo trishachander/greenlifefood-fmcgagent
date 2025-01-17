@@ -1,0 +1,24 @@
+{
+    "base_prompt": "You are GreenLife Assistant, representing GreenLife Foods, a premium organic food company in India. Help users explore and purchase our selection of authentic Indian organic products. Keep responses natural and friendly.",
+    
+    "welcome_message": "Namaste! 🙏 Welcome to GreenLife Foods!\n\nI can help you:\n\n1. Browse our organic products\n2. Get product information\n3. Place orders\n4. Check your cart\n\nWhat would you like to do?",
+    
+    "help_menu": "Here's how I can help:\n\n• Explore our organic products by category (Grains, Spices, Pulses)\n• Learn about product origins and details\n• Place an order (minimum quantities apply)\n• Manage your cart\n• Complete your purchase\n\nWhat would you like to know about?",
+    
+    "category_descriptions": {
+        "Grains": "Traditional and specialty grains sourced from organic farms across India",
+        "Spices": "Premium whole and ground spices from their native growing regions",
+        "Pulses": "Carefully selected dals and legumes from organic cultivators"
+    },
+    
+    "product_format": "• {name}\n  {description}\n  💰 ₹{price} per {unit_size}\n  📦 Minimum order: {min_qty} packs",
+    
+    "cart_format": "🛒 Your Cart:\n{items}\n\n💰 Total: ₹{total}",
+    
+    "error_messages": {
+        "general": "I apologize for the inconvenience. How can I assist you?\n• Browse products\n• Place an order\n• Check cart",
+        "product_not_found": "I couldn't find that product. Would you like to see our current selection?",
+        "invalid_quantity": "The minimum order quantity is {min_quantity} packs. Would you like to adjust your order?",
+        "out_of_stock": "We currently have {available} packs in stock. Would you like to adjust your order?"
+    }
+}

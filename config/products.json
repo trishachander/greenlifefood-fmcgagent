@@ -1,0 +1,98 @@
+{
+    "grains": {
+        "basmati": {
+            "name": "Organic Basmati Rice",
+            "description": "Premium aged basmati rice from Punjab",
+            "price": 249.99,
+            "category": "Grains",
+            "unit_size": "1kg Pack",
+            "stock": 200,
+            "min_order_quantity": 5
+        },
+        "millet": {
+            "name": "Organic Ragi Millet",
+            "description": "Stone-ground finger millet flour from Karnataka",
+            "price": 159.99,
+            "category": "Grains",
+            "unit_size": "500g Pack",
+            "stock": 150,
+            "min_order_quantity": 10
+        },
+        "quinoa": {
+            "name": "Organic White Quinoa",
+            "description": "Himalayan-grown quinoa, naturally gluten-free",
+            "price": 399.99,
+            "category": "Grains",
+            "unit_size": "500g Pack",
+            "stock": 100,
+            "min_order_quantity": 5
+        }
+    },
+    "spices": {
+        "turmeric": {
+            "name": "Organic Turmeric Powder",
+            "description": "Single-origin Lakadong turmeric from Meghalaya",
+            "price": 199.99,
+            "category": "Spices",
+            "unit_size": "100g Pack",
+            "stock": 300,
+            "min_order_quantity": 10
+        },
+        "cardamom": {
+            "name": "Organic Green Cardamom",
+            "description": "Premium cardamom pods from Kerala",
+            "price": 599.99,
+            "category": "Spices",
+            "unit_size": "100g Pack",
+            "stock": 150,
+            "min_order_quantity": 5
+        },
+        "cinnamon": {
+            "name": "Organic Ceylon Cinnamon",
+            "description": "True cinnamon sticks from Western Ghats",
+            "price": 299.99,
+            "category": "Spices",
+            "unit_size": "100g Pack",
+            "stock": 200,
+            "min_order_quantity": 5
+        }
+    },
+    "pulses": {
+        "masoor": {
+            "name": "Organic Masoor Dal",
+            "description": "Red lentils from Madhya Pradesh",
+            "price": 179.99,
+            "category": "Pulses",
+            "unit_size": "1kg Pack",
+            "stock": 250,
+            "min_order_quantity": 5
+        },
+        "moong": {
+            "name": "Organic Moong Dal",
+            "description": "Split green gram from Maharashtra",
+            "price": 199.99,
+            "category": "Pulses",
+            "unit_size": "1kg Pack",
+            "stock": 200,
+            "min_order_quantity": 5
+        },
+        "urad": {
+            "name": "Organic Urad Dal",
+            "description": "Black gram dal from Tamil Nadu",
+            "price": 219.99,
+            "category": "Pulses",
+            "unit_size": "1kg Pack",
+            "stock": 180,
+            "min_order_quantity": 5
+        },
+        "chickpea": {
+            "name": "Organic Kabuli Chana",
+            "description": "Premium white chickpeas from Rajasthan",
+            "price": 289.99,
+            "category": "Pulses",
+            "unit_size": "1kg Pack",
+            "stock": 150,
+            "min_order_quantity": 5
+        }
+    }
+}

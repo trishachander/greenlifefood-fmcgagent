@@ -25,6 +25,16 @@ cd greenlife-chatbot
 ```
 pip install -r requirements.txt
 ```
+## Usage
+### Start the Streamlit App
+```
+streamlit run finalapp.py
+```
+### Access the Chatbot
+1. Open your web browser.
+2. Navigate to http://localhost:8501/.
+3. Interact with the chatbot to explore products, manage your cart, and place orders.
+
 ## Secrets Configuration
 
 - Copy `secrets.example.toml` to `secrets.toml`.

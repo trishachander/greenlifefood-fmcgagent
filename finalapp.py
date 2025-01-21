@@ -9,7 +9,8 @@ from datetime import datetime
 from pathlib import Path
 from memory import Memory
 from context import ContextManager
-
+from tools.tools import tools
+from tools.parser import parse_tool_response
 # Configuration Loader Class
 class ConfigLoader:
     def __init__(self, config_dir: str = "config"):
@@ -258,26 +259,91 @@ Respond naturally to the user's message. Do not expose technical details or func
             return "I apologize, but I'm having trouble processing your request. Please try again."
 
     def _handle_actions(self, response: str):
-        """Handle any actions indicated in the LLM response"""
+        """Handle any actions indicated in the LLM response using tool calls"""
         try:
-            # Look for cart modification intents
-            if "add to cart" in response.lower():
-                # Extract product and quantity from response
-                # Update cart through cart_manager
-                pass
-            elif "remove from cart" in response.lower():
-                # Extract product from response
-                # Remove from cart through cart_manager
-                pass
-            elif "checkout" in response.lower():
-                # Process checkout
-                pass
+            # First ask LLM to analyze the response with system prompts
+            tool_selection = self.client.chat.completions.create(
+                model=self.model_config["model"],
+                messages=[
+                    {
+                        "role": "system",
+                        "content": f"""{self.system_prompts['base_prompt']}
+                        
+                        Current context: {self._create_context()}
+                        Product format: {self.system_prompts['product_format']}
+                        Cart format: {self.system_prompts['cart_format']}
+                        
+                        Available tools: {json.dumps(tools, indent=2)}
+                        
+                        Rules for tool usage:
+                        1. Use exact product names and prices from the catalog
+                        2. Respect minimum order quantities
+                        3. Verify stock availability before actions
+                        4. Calculate totals based on unit price × quantity
+                        5. Format currency as ₹ with 2 decimal places
+                        
+                        Return tool calls in XML format:
+                        <tool>tool_name</tool><arguments>{{json args}}</arguments>"""
+                    },
+                    {"role": "user", "content": response}
+                ],
+                temperature=0,
+                max_tokens=self.model_config["max_tokens"]
+            )
             
-            # Update memory and context
+            # Parse tool calls from LLM response
+            tool_calls = parse_tool_response(tool_selection.choices[0].message.content)
+            
+            # Execute each tool call and collect results
+            results = []
+            for tool_call in tool_calls:
+                try:
+                    # Let LLM handle the tool execution with system prompts
+                    execution_response = self.client.chat.completions.create(
+                        model=self.model_config["model"],
+                        messages=[
+                            {
+                                "role": "system",
+                                "content": f"""{self.system_prompts['base_prompt']}
+                                
+                                Current context: {self._create_context()}
+                                Product format: {self.system_prompts['product_format']}
+                                Cart format: {self.system_prompts['cart_format']}
+                                
+                                Handle the execution of tool: {tool_call["tool_name"]}
+                                with arguments: {json.dumps(tool_call["arguments"])}
+                                
+                                If this is a cart operation, ensure:
+                                1. Prices match the product catalog exactly
+                                2. Totals are calculated as price × quantity
+                                3. Cart summary follows the cart_format template"""
+                            }
+                        ],
+                        temperature=0
+                    )
+                    results.append(execution_response.choices[0].message.content)
+                    
+                    # Update context with action
+                    context_manager.update_context("last_action", {
+                        "tool": tool_call["tool_name"],
+                        "arguments": tool_call["arguments"],
+                        "result": results[-1]
+                    })
+                    
+                except Exception as e:
+                    error_msg = self.system_prompts["error_messages"]["general"]
+                    logging.error(f"Error executing tool {tool_call['tool_name']}: {str(e)}")
+                    results.append(error_msg)
+            
+            # Update memory with cart state
             memory.update_memory("cart", self.cart_manager)
             
+            return "\n".join(results) if results else None
+                
         except Exception as e:
-            logging.error(f"Error handling actions: {str(e)}")
+            logging.error(f"Error in tool calling: {str(e)}")
+            return self.system_prompts["error_messages"]["general"]
+
 
 def main():
     st.set_page_config(
